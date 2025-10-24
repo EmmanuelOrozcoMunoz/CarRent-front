@@ -57,5 +57,8 @@
       }
     }
   },
-  "defaultProject": "angular-dashboard"
+  "defaultProject": "angular-dashboard",
+  "cli": {
+    "analytics": "7bee66d6-e2fa-43b0-bd2d-6fe37685bd14"
+  }
 }
