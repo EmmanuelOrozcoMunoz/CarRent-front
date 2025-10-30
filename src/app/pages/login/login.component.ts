@@ -1,7 +1,6 @@
-
 import { Component } from '@angular/core';
-import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,22 +10,24 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   username = '';
   password = '';
+  error = '';
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    this.api.login({ username: this.username, password: this.password }).subscribe({
-      next: (res: any) => {
-        // Se asume que la API devuelve { access_token: "..." } o similar
-        const token = res.access_token || res.token || res.accessToken || res.data?.token;
-        if (token) {
-          localStorage.setItem('token', token);
+  onLogin() {
+    this.authService.login({ username: this.username, password: this.password })
+      .subscribe({
+        next: (res) => {
+          console.log('Usuario autenticado:', res);
+          // Guardar datos en localStorage (si quieres)
+          localStorage.setItem('user', JSON.stringify(res));
+          // Redirigir a dashboard u otra ruta
           this.router.navigate(['/dashboard']);
-        } else {
-          alert('Login correcto pero no se recibió token. Revisa la respuesta del backend.');
+        },
+        error: (err) => {
+          console.error(err);
+          this.error = 'Usuario o contraseña incorrectos';
         }
-      },
-      error: () => alert('Credenciales inválidas o error de conexión'),
-    });
+      });
   }
 }
