@@ -1,36 +1,33 @@
-<div class="logo">
-    <a href="#" class="simple-text logo-mini">
-      <div class="logo-img">
-          <div class="logo-text">ITM</div>
-      </div>
-    </a>
-    <a href="#" class="simple-text logo-normal">
-        Sistema ITM
-    </a>
-</div>
-<div class="sidebar-wrapper">
-    <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a [routerLink]="[menuItem.path]">
-                <i class="now-ui-icons {{menuItem.icon}}"></i>
-                <p>{{menuItem.title}}</p>
-            </a>
-        </li>
-    </ul>
-    
-    <!-- Información del usuario y logout -->
-    <div class="user-info" *ngIf="authService.getCurrentUser()">
-        <div class="user-details">
-            <div class="user-avatar">
-                <i class="now-ui-icons users_single-02"></i>
-            </div>
-            <div class="user-text">
-                <div class="user-name">{{authService.getCurrentUser()?.nombre}}</div>
-                <div class="user-role">{{authService.getCurrentUser()?.es_admin ? 'Administrador' : 'Usuario'}}</div>
-            </div>
-        </div>
-        <button class="logout-btn" (click)="logout()" title="Cerrar Sesión">
-            <i class="now-ui-icons media-1_button-power"></i>
-        </button>
+<!-- sidebar.component.html -->
+<button class="toggle-btn" id="toggleBtn" aria-label="Abrir menú">☰</button>
+
+<aside class="sidebar collapsed" id="sidebar" aria-hidden="true">
+  <div class="brand">
+    <div class="logo">S</div>
+    <div>
+      <div>MySite</div>
+      <div class="subtitle">Panel</div>
     </div>
-</div>
+  </div>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active" class="nav-item">🏠 Inicio</a>
+    <a routerLink="/cliente" routerLinkActive="active" class="nav-item">📁 Proyectos</a>
+    <a routerLink="/reportes" routerLinkActive="active" class="nav-item">📊 Reportes</a>
+    <a routerLink="/configuracion" routerLinkActive="active" class="nav-item">⚙️ Configuración</a>
+  </nav>
+
+  <div class="user-section">
+    <div class="user-info">
+      <div>Usuario: Andrés</div>
+    </div>
+    <button id="logout" class="logout-btn">Cerrar sesión</button>
+  </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="content">
+  <h1>Bienvenido</h1>
+  <p>Este es el contenido principal. El sidebar puede abrirse o cerrarse con el botón ☰.</p>
+</main>
